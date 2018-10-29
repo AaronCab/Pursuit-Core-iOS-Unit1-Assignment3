@@ -22,3 +22,5 @@ func mathStuffFactory(opString: String) -> (Double, Double) -> Double {
     return {x, y in x + y }
   }
 }
+
+let test = ""
