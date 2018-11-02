@@ -30,6 +30,10 @@ func simpleCalculator() {
     var double2: Double
     
     if let userInput = readLine()?.components(separatedBy: " ") {
+        if userInput.count != 3 {
+            print("Invalid entry, try again!")
+            simpleCalculator()
+        }
         if let checkdouble1 = Double(userInput[0]) {
             double1 = checkdouble1
         } else {
@@ -59,6 +63,7 @@ func simpleCalculator() {
             let result = mathOperation(double1, double2)
             print("\(double1) \(operand) \(double2) = \(result)")
         }
+
         
     }
     startMenu()
@@ -107,7 +112,7 @@ func playGame() {
 }
 
 func highOrderFunc() {
-    print("Please enter your high order function e.g filter 1 2 3 4 5 by > 4")
+    print("Please enter your high order function e.g filter 1,2,3,4,5 by > 4")
     if let userInput = readLine()?.lowercased().components(separatedBy: " ") {
         if userInput.count != 5 {
             print("Invalid Input")
@@ -128,7 +133,16 @@ func highOrderFunc() {
         }
         return anArray
     }
-    
+        
+    func customFilter(input: [Double], filter: (Double) -> Bool) -> [Double] {
+            var emptyArray = [Double]()
+            for number in input {
+                if filter(number) {
+                    emptyArray.append(number)
+                }
+            }
+            return emptyArray
+        }
     
     func customReduce(inputArray: [Double], initialValue: Double, reduce: (Double, Double) -> Double) -> Double {
         var sum = initialValue
@@ -136,17 +150,6 @@ func highOrderFunc() {
             sum = reduce(sum, number)
         }
         return sum
-    }
-    
-    
-    func customFilter(input: [Double], filter: (Double) -> Bool) -> [Double] {
-        var emptyArray = [Double]()
-        for number in input {
-            if filter(number) {
-                emptyArray.append(number)
-            }
-        }
-        return emptyArray
     }
     
     switch userInput[0] {
@@ -172,8 +175,13 @@ func highOrderFunc() {
         }
     case "reduce":
         if operand == "+" {
-            print(customReduce(inputArray: inputArrayAsDouble, initialValue: inputArrayAsDouble[0], reduce: {$0 + $1}))
+            print(customReduce(inputArray: inputArrayAsDouble, initialValue: givenNum, reduce: {$0 + $1}))
+        } else {
+            if operand == "*"{
+                print(customReduce(inputArray: inputArrayAsDouble, initialValue: givenNum, reduce: {$0 * $1}))
+            }
         }
+        
     default:
         print("Invalid entry")
         
